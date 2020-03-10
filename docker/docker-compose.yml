@@ -1,0 +1,36 @@
+discovery:
+  image: 0758631838/discovery-service
+  ports:
+   - "8061:8061"
+configserver:
+  image: 0758631838/config-service
+  ports:
+   - "8888:8088"
+  links:
+   - discovery
+proxy:
+  image: 0758631838/proxy-service
+  ports:
+   - "10000:8060"
+  links:
+   - discovery
+   - configserver
+   - department
+   - employee
+   - organization
+department:
+  image: 0758631838/department-service
+  links:
+   - discovery
+   - configserver
+employee:
+  image: 0758631838/employee-service
+  links:
+   - discovery
+   - configserver
+organization:
+  image: 0758631838/organization-service
+  links:
+    - discovery
+    - configserver
+
